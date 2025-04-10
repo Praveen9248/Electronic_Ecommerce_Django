@@ -1,0 +1,27 @@
+{% extends 'Technician/master.html' %} {% block content %}
+<h1>Welcome, {{ user.username }}!</h1>
+<h2>Your Active Service Requests</h2>
+
+{% if assigned_requests %}
+<ul>
+  {% for request in assigned_requests %}
+  <li>
+    <a href="{% url 'task_detail_page' request.id %}">
+      <strong>Request #{{ request.id }}</strong> -
+      <span>{{ request.repair_product.device_model }}</span>
+      <br />
+      <em>Status:</em> {{ request.get_status_display }}
+    </a>
+    <br />
+    <small>Requested on: {{ request.request_date|date:"M d, Y H:i" }}</small>
+  </li>
+  <hr />
+  {% endfor %}
+</ul>
+{% else %}
+<p>No active service requests are currently assigned to you.</p>
+{% endif %} {% endblock %} {% block extra_js %}
+<script>
+  console.log("Technician active service requests loaded.");
+</script>
+{% endblock %}

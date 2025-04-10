@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Your Service Requests</h2>
+<a href="{% url 'add_service_request' %}" class="btn btn-primary mb-3"
+  >Create New Request</a
+>
+
+{% if service_requests %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Device</th>
+      <th>Status</th>
+      <th>Requested On</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for req in service_requests %}
+    <tr>
+      <td>#{{ req.id }}</td>
+      <td>{{ req.repair_product.device_model }}</td>
+      <td>{{ req.get_status_display }}</td>
+      <td>{{ req.request_date|date:"Y-m-d H:i" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No service requests found.</p>
+{% endif %} {% endblock %}

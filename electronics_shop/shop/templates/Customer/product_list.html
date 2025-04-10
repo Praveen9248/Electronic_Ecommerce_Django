@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-12">
+      {% if query %}
+      <h2 class="h5 text-uppercase mb-3">
+        Search results for "<strong class="text-info">{{ query }}</strong>"
+      </h2>
+      <hr />
+      {% if results %}
+      <div class="list-group">
+        {% for product in results %}
+        <a
+          href="{% url 'shop_detail_page' product.slug %}"
+          class="list-group-item list-group-item-action d-flex align-items-center"
+        >
+          <div class="me-3">
+            {% if product.image %}
+            <img
+              src="{{ product.image.url }}"
+              alt="{{ product.name }}"
+              class="rounded"
+              style="width: 60px; height: 60px; object-fit: cover"
+            />
+            {% else %}
+            <div
+              class="bg-secondary text-white d-flex justify-content-center align-items-center rounded"
+              style="width: 60px; height: 60px"
+            >
+              <i class="fa fa-image fa-lg"></i>
+            </div>
+            {% endif %}
+          </div>
+          <div>
+            <h6 class="mb-1">{{ product.name }}</h6>
+            {% if product.description %}
+            <small class="text-muted"
+              >{{ product.description|truncatechars:80 }}</small
+            >
+            {% endif %} {% if product.price %}
+            <p class="mb-0 mt-1 text-success">₹{{ product.price }}</p>
+            {% endif %}
+          </div>
+          <span class="ms-auto text-muted"
+            ><i class="fa fa-chevron-right"></i
+          ></span>
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="lead">No products found matching your search query.</p>
+      {% endif %} {% else %}
+      <p class="lead">Please enter a search query to see results.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,349 @@
+{% extends "base.html" %}{% load static %}
+<!-- Start Banner Hero -->
+{% block content %}
+<!-- Start Content -->
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-3">
+      <h1 class="h2 pb-4">Filters</h1>
+      <form method="get">
+          <ul class="list-unstyled templatemo-accordion">
+              <li class="pb-3">
+                  <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                      Category
+                      <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                  </a>
+                  <ul class="collapse show list-unstyled pl-3">
+                      <li>
+                          <label for="id_category" class="text-decoration-none">
+                              {{ form.category.label_tag }}
+                              {{ form.category }}
+                          </label>
+                      </li>
+                  </ul>
+              </li>
+              <li class="pb-3">
+                  <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                      Brand
+                      <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                  </a>
+                  <ul id="collapseTwo" class="collapse list-unstyled pl-3">
+                      <li>
+                          <label for="id_brand" class="text-decoration-none">
+                              {{ form.brand.label_tag }}
+                              {{ form.brand }}
+                          </label>
+                      </li>
+                  </ul>
+              </li>
+              <li class="pb-3">
+                  <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                      Price Range
+                      <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                  </a>
+                  <ul id="collapseThree" class="collapse list-unstyled pl-3">
+                      <li>
+                          <label for="id_min_price" class="text-decoration-none">
+                              Min Price:
+                              {{ form.min_price }}
+                          </label>
+                      </li>
+                      <li>
+                          <label for="id_max_price" class="text-decoration-none">
+                              Max Price:
+                              {{ form.max_price }}
+                          </label>
+                      </li>
+                  </ul>
+              </li>
+              <li>
+                  <button type="submit" class="btn btn-primary">Filter</button>
+              </li>
+          </ul>
+      </form>
+  </div>
+
+    <div class="col-lg-9">
+      <div class="row">
+        {% for data in page %}
+        <div class="col-md-4">
+          <div class="card mb-4 product-wap rounded-0">
+            <div class="card rounded-0">
+              <img
+                class="card-img rounded-0 img-fluid"
+                src="{{data.image.url}}"
+              />
+              <div
+                class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
+              >
+                <ul class="list-unstyled">
+                  <li>
+                    <a
+                      class="btn btn-success text-white"
+                      href="{% url "shop_detail_page" data.slug %}"
+                      ><i class="far fa-heart"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      class="btn btn-success text-white mt-2"
+                      href="{% url "shop_detail_page" data.slug %}"
+                      ><i class="far fa-eye"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      class="btn btn-success text-white mt-2"
+                      href="{% url "shop_detail_page" data.slug %}"
+                      ><i class="fas fa-cart-plus"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-body">
+              <a href="{% url "shop_detail_page" data.slug %}" class="h3 text-decoration-none"
+                >{{data.name}}</a
+              >
+              
+              <ul class="list-unstyled d-flex justify-content-center mb-1">
+                <li>
+                  <i class="text-warning fa fa-star"></i>
+                  <i class="text-warning fa fa-star"></i>
+                  <i class="text-warning fa fa-star"></i>
+                  <i class="text-muted fa fa-star"></i>
+                  <i class="text-muted fa fa-star"></i>
+                </li>
+              </ul>
+              <p class="text-center mb-0">Price: &#8377;{{data.price}}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div div="row">
+        <ul class="pagination pagination-lg justify-content-end">
+          {% if page.has_previous %}
+            <li class="page-item ">
+              <a
+                class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0"
+                href="?page=1"
+                tabindex="-1"
+                >&laquo; first</a
+              >
+            </li>
+            <li class="page-item ">
+              <a
+                class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0"
+                href="?page={{ page.previous_page_number }}"
+                tabindex="-1"
+                >previous</a
+              >
+            </li>
+          {% endif %}
+          <li class="page-item disabled">
+            <a
+              class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+              href="?page={{ page.number }}"
+              >{{ page.number }}</a
+            >
+          </li>
+          {% if page.has_next %}
+            <li class="page-item">
+              <a
+                class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark"
+                href="?page={{ page.next_page_number }}"
+                >next</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark"
+                href="?page={{ page.paginator.num_pages }}"
+                >last &raquo;</a
+              >
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Content -->
+
+<!-- Start Brands -->
+<section class="bg-light py-5">
+  <div class="container my-4">
+    <div class="row text-center py-3">
+      <div class="col-lg-6 m-auto">
+        <h1 class="h1">Our Brands</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod Lorem ipsum dolor sit amet.
+        </p>
+      </div>
+      <div class="col-lg-9 m-auto tempaltemo-carousel">
+        <div class="row d-flex flex-row">
+          <!--Controls-->
+          <div class="col-1 align-self-center">
+            <a
+              class="h1"
+              href="#multi-item-example"
+              role="button"
+              data-bs-slide="prev"
+            >
+              <i class="text-light fas fa-chevron-left"></i>
+            </a>
+          </div>
+          <!--End Controls-->
+
+          <!--Carousel Wrapper-->
+          <div class="col">
+            <div
+              class="carousel slide carousel-multi-item pt-2 pt-md-0"
+              id="multi-item-example"
+              data-bs-ride="carousel"
+            >
+              <!--Slides-->
+              <div class="carousel-inner product-links-wap" role="listbox">
+                <!--First slide-->
+                <div class="carousel-item active">
+                  <div class="row">
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_01.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_02.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_03.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_04.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                  </div>
+                </div>
+                <!--End First slide-->
+
+                <!--Second slide-->
+                <div class="carousel-item">
+                  <div class="row">
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_01.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_02.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_03.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_04.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                  </div>
+                </div>
+                <!--End Second slide-->
+
+                <!--Third slide-->
+                <div class="carousel-item">
+                  <div class="row">
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_01.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_02.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_03.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                    <div class="col-3 p-md-5">
+                      <a href="#"
+                        ><img
+                          class="img-fluid brand-img"
+                          src="{% static 'assets/img/brand_04.png'%}"
+                          alt="Brand Logo"
+                      /></a>
+                    </div>
+                  </div>
+                </div>
+                <!--End Third slide-->
+              </div>
+              <!--End Slides-->
+            </div>
+          </div>
+          <!--End Carousel Wrapper-->
+
+          <!--Controls-->
+          <div class="col-1 align-self-center">
+            <a
+              class="h1"
+              href="#multi-item-example"
+              role="button"
+              data-bs-slide="next"
+            >
+              <i class="text-light fas fa-chevron-right"></i>
+            </a>
+          </div>
+          <!--End Controls-->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--End Brands-->
+{% endblock %}

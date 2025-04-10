@@ -1,0 +1,26 @@
+{% extends 'Technician/master.html' %} {% block content %}
+<h1>Completed Service Requests</h1>
+
+{% if completed_requests %}
+<ul>
+  {% for request in completed_requests %}
+  <li>
+    <strong>Request #{{ request.id }}</strong> –
+    <span>{{ request.repair_product.device_model }}</span>
+    <br />
+    Completed on: {{ request.request_date|date:"M d, Y H:i" }}
+    <br />
+    <a href="{% url 'task_detail_page' request.id %}">View Details</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No completed service requests yet.</p>
+{% endif %}
+
+<p>
+  <a href="{% url 'technician_page' %}" class="btn btn-secondary mt-3"
+    >Back to Dashboard</a
+  >
+</p>
+{% endblock %}

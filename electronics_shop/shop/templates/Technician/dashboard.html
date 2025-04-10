@@ -1,0 +1,27 @@
+{% extends 'Technician/master.html' %} {% block content %}
+<h1>Your Profile</h1>
+<div class="card">
+  <div class="card-body">
+    <p><strong>Username:</strong> {{ technician.username }}</p>
+    {% if technician.first_name or technician.last_name %}
+    <p>
+      <strong>Name:</strong> {{ technician.first_name }} {{ technician.last_name
+      }}
+    </p>
+    {% endif %}
+    <p><strong>Email:</strong> {{ technician.email }}</p>
+    <p><strong>Role:</strong> {{ technician.get_role_display }}</p>
+    <p><strong>Last Login:</strong> {{ technician.last_login }}</p>
+    <p>
+      <strong>Date Joined:</strong> {{ technician.date_joined|date:"F j, Y" }}
+    </p>
+    <a href="{% url 'technician_page' %}" class="btn btn-secondary mt-3"
+      >Back to Home</a
+    >
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script>
+  console.log("Technician tasks page loaded.");
+</script>
+{% endblock %}
